@@ -1,255 +1,130 @@
 package com.hungryshark.calculator;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.RadioGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.google.android.material.radiobutton.MaterialRadioButton;
 
 public class MainActivity extends BaseActivity {
 
-    Button btn0 , btn1 , btn2 , btn3 , btn4 , btn5 , btn6 ,
-            btn7 , btn8 , btn9 , btnPlus , btnMinus , btnDiv ,
-            btnMul , btnC , btnEq ;
+    private static final int REQUEST_CODE_SETTING_ACTIVITY = 99;
 
+    private final int[] numberButtonIds = new int[]{R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3,
+            R.id.button_4, R.id.button_5, R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9};
+
+    Button btnPlus, btnMinus, btnDiv, btnMul, btnC, btnEq;
+    ImageButton btnSet;
     TextView inputBox, resultBox;
-
     float mValueOne, mValueTwo;
-
     boolean mAddition, mSubtract, mMultiplication, mDivision;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getAppTheme(getChooseTheme()));
         setContentView(R.layout.activity_main);
 
-        initThemeChooser();
+        btnPlus = findViewById(R.id.button_plus);
+        btnMinus = findViewById(R.id.button_minus);
+        btnMul = findViewById(R.id.button_multiply);
+        btnDiv = findViewById(R.id.button_division);
+        btnC = findViewById(R.id.button_reset);
+        btnEq = findViewById(R.id.button_equals);
+        btnSet = findViewById(R.id.button_setting);
 
-        btn0 = (Button) findViewById(R.id.button_0);
-        btn1 = (Button) findViewById(R.id.button_1);
-        btn2 = (Button) findViewById(R.id.button_2);
-        btn3 = (Button) findViewById(R.id.button_3);
-        btn4 = (Button) findViewById(R.id.button_4);
-        btn5 = (Button) findViewById(R.id.button_5);
-        btn6 = (Button) findViewById(R.id.button_6);
-        btn7 = (Button) findViewById(R.id.button_7);
-        btn8 = (Button) findViewById(R.id.button_8);
-        btn9 = (Button) findViewById(R.id.button_9);
-        btnPlus = (Button) findViewById(R.id.button_plus);
-        btnMinus = (Button) findViewById(R.id.button_minus);
-        btnMul = (Button) findViewById(R.id.button_multiply);
-        btnDiv = (Button) findViewById(R.id.button_division);
-        btnC = (Button) findViewById(R.id.button_reset);
-        btnEq = (Button) findViewById(R.id.button_equals);
+        inputBox = findViewById(R.id.input_box);
+        resultBox = findViewById(R.id.result_box);
 
-        inputBox = (TextView) findViewById(R.id.input_box);
-        resultBox = (TextView) findViewById(R.id.result_box);
+        setNumberButtonListeners();
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"1");
-                resultBox.setText(resultBox.getText()+"1");
-            }
-        });
+        btnPlus.setOnClickListener(v -> {
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"2");
-                resultBox.setText(resultBox.getText()+"2");
-            }
-        });
-
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"3");
-                resultBox.setText(resultBox.getText()+"3");
-            }
-        });
-
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"4");
-                resultBox.setText(resultBox.getText()+"4");
-            }
-        });
-
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"5");
-                resultBox.setText(resultBox.getText()+"5");
-            }
-        });
-
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"6");
-                resultBox.setText(resultBox.getText()+"6");
-            }
-        });
-
-        btn7.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"7");
-                resultBox.setText(resultBox.getText()+"7");
-            }
-        });
-
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"8");
-                resultBox.setText(resultBox.getText()+"8");
-            }
-        });
-
-        btn9.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"9");
-                resultBox.setText(resultBox.getText()+"9");
-            }
-        });
-
-        btn0.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                inputBox.setText(inputBox.getText()+"0");
-                resultBox.setText(resultBox.getText()+"0");
-            }
-        });
-
-        btnPlus.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-
-                if (inputBox == null){
-                    inputBox.setText("");
-                }else {
-                    resultBox.setText(resultBox.getText()+"+");
-                    mValueOne = Float.parseFloat(inputBox.getText() + "");
-                    mAddition = true;
-                    inputBox.setText(null);
-                }
-            }
-        });
-
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                resultBox.setText(resultBox.getText()+"-");
-                mValueOne = Float.parseFloat(inputBox.getText() + "");
-                mSubtract = true ;
-                inputBox.setText(null);
-            }
-        });
-
-        btnMul.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                resultBox.setText(resultBox.getText()+"*");
-                mValueOne = Float.parseFloat(inputBox.getText() + "");
-                mMultiplication = true ;
-                inputBox.setText(null);
-            }
-        });
-
-        btnDiv.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                resultBox.setText(resultBox.getText()+"/");
-                mValueOne = Float.parseFloat(inputBox.getText()+"");
-                mDivision = true ;
-                inputBox.setText(null);
-            }
-        });
-
-        btnEq.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                mValueTwo = Float.parseFloat(inputBox.getText() + "");
-
-                if (mAddition){
-
-                    inputBox.setText(mValueOne + mValueTwo +"");
-                    mAddition=false;
-                }
-
-
-                if (mSubtract){
-                    inputBox.setText(mValueOne - mValueTwo+"");
-                    mSubtract=false;
-                }
-
-                if (mMultiplication){
-                    inputBox.setText(mValueOne * mValueTwo+"");
-                    mMultiplication=false;
-                }
-
-                if (mDivision){
-                    inputBox.setText(mValueOne / mValueTwo+"");
-                    mDivision=false;
-                }
-            }
-        });
-
-        btnC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            if (inputBox == null) {
                 inputBox.setText("");
-                resultBox.setText("");
+            } else {
+                resultBox.setText(resultBox.getText() + "+");
+                mValueOne = Float.parseFloat(inputBox.getText() + "");
+                mAddition = true;
+                inputBox.setText(null);
             }
+        });
+
+        btnMinus.setOnClickListener(v -> {
+            resultBox.setText(resultBox.getText() + "-");
+            mValueOne = Float.parseFloat(inputBox.getText() + "");
+            mSubtract = true;
+            inputBox.setText(null);
+        });
+
+        btnMul.setOnClickListener(v -> {
+            resultBox.setText(resultBox.getText() + "*");
+            mValueOne = Float.parseFloat(inputBox.getText() + "");
+            mMultiplication = true;
+            inputBox.setText(null);
+        });
+
+        btnDiv.setOnClickListener(v -> {
+            resultBox.setText(resultBox.getText() + "/");
+            mValueOne = Float.parseFloat(inputBox.getText() + "");
+            mDivision = true;
+            inputBox.setText(null);
+        });
+
+        btnEq.setOnClickListener(v -> {
+            mValueTwo = Float.parseFloat(inputBox.getText() + "");
+
+            if (mAddition) {
+                inputBox.setText(mValueOne + mValueTwo + "");
+                mAddition = false;
+            }
+
+            if (mSubtract) {
+                inputBox.setText(mValueOne - mValueTwo + "");
+                mSubtract = false;
+            }
+
+            if (mMultiplication) {
+                inputBox.setText(mValueOne * mValueTwo + "");
+                mMultiplication = false;
+            }
+
+            if (mDivision) {
+                inputBox.setText(mValueOne / mValueTwo + "");
+                mDivision = false;
+            }
+        });
+
+        btnC.setOnClickListener(v -> {
+            inputBox.setText("");
+            resultBox.setText("");
+        });
+
+        btnSet.setOnClickListener(v -> {
+            Intent runSettings = new Intent(MainActivity.this, SettingActivity.class);
+            startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
         });
     }
 
-    // Инициализация радиокнопок
-    private void initThemeChooser() {
-        initRadioButton(findViewById(R.id.radioButtonMyCoolStyle), MyCoolCodeStyle);
-        initRadioButton(findViewById(R.id.radioButtonMaterialDark), AppThemeDarkCodeStyle);
-        initRadioButton(findViewById(R.id.radioButtonMaterialLight), AppThemeLightCodeStyle);
-        initRadioButton(findViewById(R.id.radioButtonMaterialLightDarkAction), AppThemeCodeStyle);
-
-        RadioGroup rg = findViewById(R.id.radioButtons);
-        ((MaterialRadioButton) rg.getChildAt(getCodeStyle(MyCoolCodeStyle))).setChecked(true);
+    @SuppressLint("SetTextI18n")
+    private void setNumberButtonListeners() {
+        for (int numberButtonId : numberButtonIds) {
+            findViewById(numberButtonId).setOnClickListener(v -> {
+                Button btn = (Button) v;
+                inputBox.setText(inputBox.getText() + btn.getText().toString());
+                resultBox.setText(resultBox.getText() + btn.getText().toString());
+            });
+        }
     }
 
-    // Все инициализации кнопок очень похожи, поэтому создадим метод дляпереиспользования
-    private void initRadioButton(View button, final int codeStyle) {
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-// сохраним настройки
-                setAppTheme(codeStyle);
-
-// пересоздадим активити, чтобы тема применилась
-                recreate();
-            }
-        });
-    }
-}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_CODE_SETTING_ACTIVITY) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        if (resultCode == RESULT_OK) {
+            recreate();
+        }
+    }}
