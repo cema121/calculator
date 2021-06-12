@@ -29,42 +29,15 @@
         android:background="@color/input_background_color"
         android:textSize="@dimen/result_box_textSize" />
 
-    <RadioGroup
-        android:id="@+id/radioButtons"
+    <ImageButton
+        android:id="@+id/button_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnSpan="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="70dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCancel">
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonMyCoolStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/my_cool_style" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonMaterialLight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/material_light" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonMaterialLightDarkAction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/material_light_action_bar_dark" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButtonMaterialDark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/material_dark" />
-    </RadioGroup>
+        android:background="@null"
+        android:layout_gravity="end"
+        android:layout_marginEnd="15dp"
+        android:layout_column="3"
+        android:src="@drawable/ic_settings"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_1"
